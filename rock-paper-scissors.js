@@ -1,5 +1,3 @@
-// simply returns a random string - rock, paper or scissors
-
 function getComputerChoice() {
     randomVal = Math.random() * 100;
     console.log(randomVal);
@@ -14,21 +12,16 @@ function getComputerChoice() {
     }
 }
 
-//prompt user and return string for rock, paper or scissors 
-
 function getHumanChoice() {
     return prompt("Please enter your choice");
 }
-
-//global scope score variables
 
 let humanScore = 0;
 let computerScore = 0;
 const options = ["rock", "paper", "scissors"];
 
-//rock beats paper beats scissors 
-//therefore, if the human chooses the choice `after` the computer choice (in the order RPS) the human wins
-//the array is made to loop, i.e., if the index is 2+1, it will return 0, because its length is 3
+//rock loses to paper loses to scissors loses to (loop around - rock)
+//thus if the human chooses the choice `after` the computer choice (in the order RPS) the human wins
 
 function playRound(humanChoice, computerChoice) {
 
@@ -52,8 +45,6 @@ function playRound(humanChoice, computerChoice) {
     }
 
 }
-
-//
 
 function playGame() {
     console.log("Welcome to Rock Paper Scissors! Try your luck...");
