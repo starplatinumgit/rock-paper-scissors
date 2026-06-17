@@ -1,3 +1,21 @@
+const resultText = document.querySelector("#resultText");
+
+const playerChoices = document.querySelectorAll(".playerChoices button");
+
+const scoreText = document.querySelector('#scoreText');
+
+playerChoices.forEach((button) => {
+
+    button.addEventListener("click", () => {
+        let playerChoice = button.id;
+        playRound(playerChoice, getComputerChoice());
+        playerChoice = "";
+    })
+
+})
+
+
+
 function getComputerChoice() {
     randomVal = Math.random() * 100;
     console.log(randomVal);
@@ -13,11 +31,12 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    return prompt("Please enter your choice");
+    console.log("Please enter your choice");
 }
 
 let humanScore = 0;
 let computerScore = 0;
+scoreText.textContent = `The score is ${humanScore} to ${computerScore}`;
 const options = ["rock", "paper", "scissors"];
 
 //rock loses to paper loses to scissors loses to (loop around - rock)
@@ -31,33 +50,55 @@ function playRound(humanChoice, computerChoice) {
     computerChoiceIndex = options.indexOf(computerChoice);
 
     if (humanChoice === computerChoice) {
-        console.log(`${humanChoice} and ${computerChoice}... It's a tie! Try again:`)
-        playRound(getHumanChoice(), getComputerChoice());
+        resultText.textContent = `${humanChoice} and ${computerChoice}... It's a tie! Try again:`
+        return;
         }
     
     else if (humanChoiceIndex === (computerChoiceIndex+1) % options.length) {
         humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
+        resultText.textContent = `You win! ${humanChoice} beats ${computerChoice}!`;
+
     }
     else {
         computerScore++;
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}!`)
-    }
+        resultText.textContent = `You lose! ${computerChoice} beats ${humanChoice}!`;
 
+    }
+    scoreText.textContent = `The score is ${humanScore} to ${computerScore}`;
+
+    printWinner(humanScore, computerScore);
 }
 
-function playGame() {
-    console.log("Welcome to Rock Paper Scissors! Try your luck...");
-    for (let step = 0; step < 5; step++) {
-        playRound(getHumanChoice(), getComputerChoice());
+function printWinner(humanScore, computerScore) {
+    if (humanScore === 5) {
+        scoreText.textContent = "You win!";
     }
-
-    if (humanScore > computerScore) {
-        console.log(`The score is ${humanScore} to ${computerScore}! You win, human!`);
+    else if (computerScore === 5) {
+        scoreText.textContent = "Dio wins...";
     }
     else {
-        console.log(`The score is ${computerScore} to ${humanScore}! You lose, human...`);
+        return;
     }
 }
 
-playGame();
+
+
+
+
+
+
+// function playGame() {
+//     console.log("Welcome to Rock Paper Scissors! Try your luck...");
+//     for (let step = 0; step < 5; step++) {
+//         playRound(getHumanChoice(), getComputerChoice());
+//     }
+
+//     if (humanScore > computerScore) {
+//         console.log(`The score is ${humanScore} to ${computerScore}! You win, human!`);
+//     }
+//     else {
+//         console.log(`The score is ${computerScore} to ${humanScore}! You lose, human...`);
+//     }
+// }
+
+// playGame();
