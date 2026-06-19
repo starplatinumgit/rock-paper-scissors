@@ -1,8 +1,10 @@
-const resultText = document.querySelector("#resultText");
+const resultText = document.querySelector("#result-text");
 
-const playerChoices = document.querySelectorAll(".playerChoices button");
+const playerChoices = document.querySelectorAll(".player-choices button");
 
-const scoreText = document.querySelector('#scoreText');
+const scoreText = document.querySelector('#score-text');
+
+
 
 playerChoices.forEach((button) => {
 
