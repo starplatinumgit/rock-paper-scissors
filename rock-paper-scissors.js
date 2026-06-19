@@ -7,25 +7,23 @@ const scoreText = document.querySelector('#score-text');
 const gameplayText = document.querySelector('.gameplay pre');
 
 const jotaroTimestop = new Audio('/audio/jotaroTimestop2.mp3');
+const jotaroOra = new Audio('/audio/jotaroOra.mp3');
+const jotaroHeartstop = new Audio('/audio/jotaroHeartstop.mp3');
+
 
 const html = document.querySelector('html');
 
-let isAnimation = false;
 playerChoices.forEach((button) => {
 
-        if (isAnimation === false) {
-            button.addEventListener("click", () => {
-                let playerChoice = button.id;
-                playRound(playerChoice, getComputerChoice());
-                playerChoice = "";
-            })
-        }
-
-
+     button.addEventListener("click", () => {
+            let playerChoice = button.id;
+            playRound(playerChoice, getComputerChoice());                playerChoice = "";
+        })
+        
 })
 
-function paintAction(humanChoice) {
-
+function printHumanAction(humanChoice) {
+    pauseButtons();
     switch (humanChoice) {
         case 'timestop':
             gameplayText.textContent = 
@@ -55,10 +53,10 @@ function paintAction(humanChoice) {
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⡟⠻⢸⠈⢿⠀⣿⢿⣿⠿⣿⣿⣿⣿⣿⣿⣿⢹⣿⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⢈⣿⠀⠀⠀⠀⠀⠀⠀
             `
             jotaroTimestop.play();
-            setTimeout(() => {
+            setTimeout(() => {  
 
-                isAnimation = true;
                 returnAscii();
+                playButtons();
             }, 3000)
             setTimeout(() => {
                 html.style.transition = 'filter 1.25s';
@@ -66,10 +64,87 @@ function paintAction(humanChoice) {
 
                 setTimeout(() => {
                    html.style.filter = 'invert(0%)' 
-                }, 1250)
+                }, 1650)
 
-            }, 300)
+            }, 500)
+            break;
+        case 'ora':
+            gameplayText.textContent = 
+            `
+ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⡿⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⣿⣿⣿⣿⣿⣶⣄⣀⣀⣀⣴⣶⣶⣤⣄⣀⣠⣤⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠉⠙⠈⠻⣆⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢸⣄⣼⣿⣿⣿⣿⣿⣿⣿⡿⣿⢿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣧⣾⣷⣷⣾⣯⣼⣿⣿⣿⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣿⣿⣦⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠘⠿⣿⣿⣿⣿⡍⠟⠿⣿⠟⢁⣿⣶⣿⠟⠋⠁⠀⠀⢀⣀⣠⠤⢶⣶⣶⡶⠚⢙⣲⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣴⣿⣏⣈⠿⣿⣷⡄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣶⣿⣿⣿⣿⡇⠀⠀⢠⡤⠥⢸⣿⣴⣶⢿⡶⡾⠋⠀⠀⣠⡿⣱⡿⢠⣶⣿⡏⠙⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣦⡘⣿⠇
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠋⠀⠀⠈⠹⣿⣷⣀⣀⠀⣾⣷⣼⣿⣋⣴⠏⠐⣀⣴⣾⣟⣋⣼⡽⢡⠿⢿⣿⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣤⣧⠿⢟⣿⡶⢟⣫⣶⣾⣿⠏⠤⠔⠻⠍⠓⠛⣉⣩⣴⠏⢀⣀⠹⣶⣿⡟⠀⠀⠀⠀⠀⠀⣰⠟⣽⠟⣿⣿⣿⣧⣉⠙⠿⠿⣿⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠳⣌⠉⠀⣴⣷⠿⢋⣡⡶⠛⠉⢉⡿⠈⠀⢀⣠⣤⡶⠚⠛⢭⣳⣄⣀⡨⠟⠛⠛⠛⠧⣄⣀⣤⠴⠒⣾⠁⢰⣿⣴⣿⣿⣿⣿⣿⣿⣶⣿⡿⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⣆⡾⣉⡤⠖⠋⢁⣠⣤⣶⣾⡗⢨⣦⣿⡋⠀⠛⣶⣤⣾⣿⣿⣉⣀⡀⠀⠀⠀⣰⣿⣻⠃⠀⠀⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀
+⠀⠀⠀⠀⢀⣤⡶⣾⣟⠻⣄⠙⠟⢁⣤⣾⣿⣿⠟⠋⠁⠈⠓⡿⣏⣹⣿⣿⣾⣿⣯⢻⣿⣯⣀⣈⣙⣧⠀⣼⣿⣿⣿⣄⣀⣤⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀
+⠀⠀⠀⣰⣿⣾⣿⣟⣁⣴⣿⣆⢲⣿⡿⠟⠋⠀⠀⠀⠀⠀⣠⣧⠞⠉⠀⣠⣿⣿⣿⣾⡛⠯⠿⠿⣛⣻⣷⣿⣿⣿⣿⣷⣾⣩⣽⣿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣿⣿⣿⣿⣿⢏⣷⢀⣉⣿⡵⠚⠁⠀⠀⠀⢀⡴⣫⠟⠁⣠⠴⢚⣽⣿⣿⣿⣿⣿⣦⣄⣀⠀⠈⣉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠛⠻⢿⣿⢃⣾⡿⠈⣩⡟⠀⢀⣠⡤⢶⡞⢻⣟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⢿⣿⠿⠛⢿⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢸⣿⣞⢹⣤⣶⣿⣷⣾⣯⣿⣦⣮⣅⣤⣙⣷⣽⣿⣿⡿⠟⠋⣉⠉⠹⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠛⠿⠯⠞⠋⠁⠀⠀⠀⠙⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⡿⣿⣉⣉⣉⣉⣉⠉⠉⠉⠉⣻⣻⠁⠀⢀⣴⠟⠋⢡⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⣿⠟⣿⠞⡋⠁⠀⠈⠙⣿⠿⣷⣶⣾⣵⣧⣤⣴⠟⠁⠀⣠⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⡇⠀⣧⠀⠀⠀⢰⠃⠀⢀⠘⢯⢻⡟⠛⣿⣆⣠⣾⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣀⣈⣿⣿⣿⣦⣿⣷⣦⣠⡏⣠⡶⠋⢠⠞⣧⢹⠀⢹⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⠛⣹⠁⠀⠈⣷⠟⠁⣴⠃⣠⢏⡼⠀⣼⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡄⢹⣤⡀⢀⡟⠀⣼⣿⠟⡵⣿⠀⣽⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢧⠀⣿⣿⡀⢧⡇⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            `
+            jotaroOra.play();
+            setTimeout(() => {
+
+                returnAscii();
+                playButtons();
+            }, 3700)
+        break;
+        case 'heart':
+            gameplayText.textContent = 
+            `
+                         +***#% ------=%%% .# --+%%%=                                  
+     ###. **+ =***          =***%%%.--=*%% # -=#%*##                                   
+%%%***        +****:            **##%+---=    #*###%%#                                 
+ ***        +********               : --=-%%#--=%##%%%                                 
++.       =++   +**=** *            -:---%%%%%%%%###%%%                                 
+       ++    -    ***=***      *: :--==%%%%%%%%%%##%%%                                 
+     =:         +**  +  **##### ---==+%%%%%%#%%%%%#%%%%                                
+   =:          =+      +*###.*  --====#*%%%%+:%%%*# .%%= #                             
+  =           =+       ***:%%    %%%%%%%%%%%#%+%%%% :. -+%                             
+              =       +*  %%##%%%%##%%%%#%#### #:=%%%%%%%%+                            
+             :       .+  %%%%%%%%%##%#####+#.:-#=  #%#.-###%                           
+                        %%%%%%##########+---=-=== :.-----#%%%                          
+                        ############:=- -===-=--==--#%%%%%%%#                          
+                         ######## --=====-%####-=-=#%%%%%%%%=                          
+               .             +.=%%%#== %%%%#%##%=-=----#+--::                          
+                             *:#*--- %%%%%%%%##=- %%==-- %%:                           
+                             %* -- %%%%%%%%%##= ##%%# -.%#%                            
+                             %%%=%%%%%#######-%+#%%% -=%%%%                            
+               .             %#%%%%########+*%=:#%%%:%=#%%%%                           
+ ==            =             %##%########.:----+#%%%:--##%%%                           
+  +++                          #######.:-----.%###-#-::####                            
+=+****+*++*+-   +               ### ####= -#######*..####                              
+  =+++*:+++**********=  =-+: -  :***+################+                                 
+             =*++*+********            #:######                                        
+                                        +#####                                         
+                                                                                       
+                                                                   
+            `
+            jotaroHeartstop.play();
+            setTimeout(() => {
+
+                returnAscii();
+                playButtons();
+            }, 3000)
+        break;
     }
+    
 
 }
 
@@ -105,8 +180,17 @@ function returnAscii() {
     `
 }
 
+function pauseButtons() {
+    playerChoices.forEach((button) => {
+        button.disabled = true;
+    })
+}
 
-
+function playButtons() {
+    playerChoices.forEach((button) => {
+        button.disabled = false;
+    })
+}
 
 
 function getComputerChoice() {
@@ -141,17 +225,16 @@ function playRound(humanChoice, computerChoice) {
     computerChoice = computerChoice.toLowerCase();
     humanChoiceIndex = options.indexOf(humanChoice);
     computerChoiceIndex = options.indexOf(computerChoice);
-
+    
     if (humanChoice === computerChoice) {
         resultText.textContent = `${humanChoice} and ${computerChoice}... It's a tie! Try again:`
         return;
         }
     
     else if (humanChoiceIndex === (computerChoiceIndex+1) % options.length) {
-        isAnimation = true;
-        paintAction(humanChoice);
         humanScore++;
         resultText.textContent = `You win! ${humanChoice} beats ${computerChoice}!`;
+        printHumanAction(humanChoice);
 
     }
     else {
@@ -161,7 +244,12 @@ function playRound(humanChoice, computerChoice) {
     }
     scoreText.textContent = `The score is ${humanScore} to ${computerScore}`;
 
-    printWinner(humanScore, computerScore);
+    if (humanScore === 5 || computerScore === 5) {
+        printWinner(humanScore, computerScore);
+        humanScore = 0;
+        computerScore = 0;        
+    }
+    
 }
 
 function printWinner(humanScore, computerScore) {
