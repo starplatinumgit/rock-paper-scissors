@@ -4,17 +4,108 @@ const playerChoices = document.querySelectorAll(".player-choices button");
 
 const scoreText = document.querySelector('#score-text');
 
+const gameplayText = document.querySelector('.gameplay pre');
 
+const jotaroTimestop = new Audio('/audio/jotaroTimestop2.mp3');
 
+const html = document.querySelector('html');
+
+let isAnimation = false;
 playerChoices.forEach((button) => {
 
-    button.addEventListener("click", () => {
-        let playerChoice = button.id;
-        playRound(playerChoice, getComputerChoice());
-        playerChoice = "";
-    })
+        if (isAnimation === false) {
+            button.addEventListener("click", () => {
+                let playerChoice = button.id;
+                playRound(playerChoice, getComputerChoice());
+                playerChoice = "";
+            })
+        }
+
 
 })
+
+function paintAction(humanChoice) {
+
+    switch (humanChoice) {
+        case 'timestop':
+            gameplayText.textContent = 
+            `
+    ⣀⣼⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣄⣀⡀⠀⠀⠘⣿⣿⡸⢦⣃⡀⠇⠸⠃⡿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣂⣤⠎⠀⠀
+⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣼⣅⣏⡇⠀⡇⢭⣉⠁⢰⣷⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀
+⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣌⡂⠠⠞⢹⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⡾⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⠛⠛⢻⣿⠟⠛⠛⣿⡿⠿⢿⣿⣿⣿⣿⣿⣷⣦⣉⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⡿⠀
+⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠁⣦⠀⠈⣿⠀⠀⢠⡟⠀⠀⢸⣿⠻⣿⣿⣿⣿⣿⣿⣿⠀⢉⣿⣿⣿⣿⣿⣛⠉⠀⠀
+⠀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣿⣇⣀⢀⣤⠼⢦⠀⠀⠀⣴⠟⢷⣄⣀⣤⣿⣿⣿⣿⣿⣿⡿⣿⣿⣾⣾⣿⣿⣿⣿⠿⠋⠀⠀⠀
+⠀⠀⣿⣿⡿⠿⢿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣶⣼⣷⣄⢸⣧⣶⣾⣿⣿⣿⢿⣿⡿⠻⢿⡙⠶⢾⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀
+⠀⠀⠹⣿⣿⣄⣴⣿⣿⣿⡿⠛⢿⣁⣈⣿⣿⣿⣹⣿⣿⣿⠯⣿⡿⠿⣏⣹⣧⣌⣻⠿⠷⠒⠋⠁⢀⡼⢿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀
+⠀⠀⠀⣿⣿⣿⣤⠴⢿⣿⡟⢦⣀⣠⣬⣿⣿⣿⣿⡟⠀⣹⠶⣾⠀⠀⠹⣿⡟⠻⠷⣶⣤⣤⣤⠔⠉⠀⢸⡿⠛⠻⣿⣿⣧⣀⠀⠀⠀⠀
+⠀⢀⣴⣿⠿⠍⠁⢀⡜⠛⡇⠀⢹⠁⠀⠀⠀⠙⠿⠃⠀⣀⣀⣼⡀⠀⠀⠉⠀⠀⠀⠀⠈⠉⢹⠀⠀⠀⠈⣠⡾⡗⢿⣿⣿⠁⠀⠀⠀⠀
+⠀⣼⣿⠇⠀⠀⠀⢹⢷⣷⡷⠀⠐⡄⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠸⠀⠀⠀⢸⣿⡆⠑⢸⣿⢻⡇⠀⠀⠀⡴
+⠀⢸⣿⡆⠀⠀⠀⠸⡎⢷⣿⠀⠀⡇⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣇⡀⢸⣿⠃⠀⠀⠀⡴⠀
+⠀⠂⠻⣧⠀⠀⠀⠠⡇⢼⣿⡆⠀⡇⠀⠀⠀⠀⠀⠀⠀⠈⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⠟⢁⣿⡇⠀⠀⠀⢸⠁⠀
+⠀⠀⠈⠹⠟⠛⠒⠒⣿⡌⠻⡇⠀⢸⠀⠀⠀⠀⠀⣠⣤⣤⣠⣤⣶⣦⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣯⠀⢠⣾⣿⣷⣄⣠⠄⡇⠀⠀
+⣄⣀⡀⠀⠀⠀⠀⠀⢸⣷⡀⣼⠀⠸⡀⠀⠀⠠⡾⠟⠛⠛⠛⠛⠋⠉⠙⠛⣛⠛⠀⠀⠀⠀⠀⠀⠀⣌⣉⣴⣿⣿⣿⣿⣿⣥⣾⡇⠀⠀
+⣿⣿⣿⣿⣶⣦⣤⣤⣼⣿⣷⣼⡆⠀⣇⠀⠀⠀⠳⣄⣤⡤⠤⡶⠶⠤⣤⡤⠟⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠟⢻⣿⣿⣿⣿⠿⠟⢷⠀⠀
+⣈⡉⠙⠛⠿⠿⣿⣿⣿⣿⣿⠀⣇⠀⠀⠀⠀⠀⠀⠀⠉⠙⢶⠗⠒⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟⠁⠀⣼⣿⣿⣿⣧⠀⠀⠘⢧⠀
+⠀⠈⠉⠒⠲⠄⠀⠀⣿⣿⣿⠀⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠸⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡞⠀⠀⠘⠉⠈⣿⣿⣿⠀⠀⠀⠀⠑
+⠀⠀⠀⠀⠀⠀⠀⠀⠛⣿⣿⢰⡾⣿⢳⣄⠀⠀⠀⠀⠀⠀⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⠁⠀⠀⢀⡆⠀⣿⡟⡟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⢸⣧⣿⣿⢸⣷⣄⠀⠀⣀⣤⣤⣤⣤⣤⣄⠀⠀⠀⣠⣾⢻⣿⣿⣟⡠⠖⠉⠉⠑⣄⢻⠧⠥⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⢸⣯⣿⣿⢸⣿⠈⣷⣴⣿⣿⣿⣿⣿⣿⣿⣷⣤⢾⣿⢸⣾⢸⣿⠟⠀⠀⠀⠀⠀⢸⣾⠐⠒⠂⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⡟⠻⢸⠈⢿⠀⣿⢿⣿⠿⣿⣿⣿⣿⣿⣿⣿⢹⣿⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⢈⣿⠀⠀⠀⠀⠀⠀⠀
+            `
+            jotaroTimestop.play();
+            setTimeout(() => {
+
+                isAnimation = true;
+                returnAscii();
+            }, 3000)
+            setTimeout(() => {
+                html.style.transition = 'filter 1.25s';
+                html.style.filter = 'invert(1)'
+
+                setTimeout(() => {
+                   html.style.filter = 'invert(0%)' 
+                }, 1250)
+
+            }, 300)
+    }
+
+}
+
+function returnAscii() {
+    gameplayText.textContent=`
+⠟⠁⠘⣿⣿⠛⠛⡟⠛⠛⢿⣿⣿⣿⣿⣿⡿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ 
+⡄⠀⠀⠸⣿⡀⠀⠘⣆⠀⠘⣿⣿⣿⣿⣿⣿⣶⣶⣤⣈⠹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣿⣿⣷⡾⠟⠻⠟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⡄⠀⠀⠘⣷⡀⠀⠘⣆⠀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠈⢿⣿⡿⠿⠟⠋⠉⡀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⡇⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣄⠀⠀⠸⣷⡀⠀⠘⡿⠃⠀⠙⠋⠉⠻⠛⠋⠀⠀⢀⣈⡁⠂⣀⣦⠀⠘⡀⠀⢧⠀⠘⣿⣿⣿⡏⠙⠿⣿⣿⡇⢀⢰⡇⠀⠀⠀⢼⣿⣿⣿⠉⠙⡏⠙⣿⣿
+⣿⣿⣿⣆⠀⠀⠙⣿⡶⠂⠀⠀⢀⡀⠀⠀⠀⠀⠀⢀⠀⣈⣻⣿⡆⢉⣙⡄⠀⣇⠀⠈⣶⣶⡿⠟⠻⡁⠀⠀⣸⣿⡇⣾⠘⠇⠀⠈⠀⠈⣿⣿⡇⢠⢠⣇⣿⣟⡖
+⣿⣿⣿⣿⣧⠀⠀⠈⠁⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⣿⠀⢿⣿⣿⣇⠈⢿⣷⠀⠘⠶⠒⢛⠹⣇⠐⠀⠃⠀⠀⣿⣿⡇⢿⠖⠂⠀⣀⣤⣴⣿⣿⡇⣸⢸⣿⣧⣿⣹
+⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⢠⡀⠀⣿⠀⠸⣿⣿⣿⣶⣄⠹⡆⣶⠿⠛⣋⣰⣿⠀⡆⠠⠤⠃⠹⡿⠁⠀⣰⣿⣿⣿⣿⣿⣿⣿⡇⣷⠮⠭⠝⣿⣿
+⣿⣿⣿⣿⣿⣿⣧⠀⠀⠈⠃⠀⠂⠀⠀⠀⣿⡇⢰⠋⠀⠀⢿⣿⣿⣿⣿⣄⠁⢹⡆⠿⣿⣿⣿⠀⢷⡤⠀⣀⣠⣤⣶⠶⠿⣿⡿⢿⣿⣿⣿⣿⠀⠇⢰⣶⣾⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⣰⣶⣄⠀⠀⠿⠃⠁⠀⠀⠀⠈⠻⡟⣿⣿⣿⣷⡀⠺⣿⣿⣿⣿⡆⢸⠀⣾⣿⣿⣿⣿⡀⠂⠀⠀⠀⠙⢿⣿⣿⣀⣠⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⠀⣰⣿⣯⣿⣿⡧⠀⠀⠀⠀⠀⠀⣀⣀⡀⠹⣿⣿⣿⣿⣷⣄⠘⣿⣿⣿⣧⠈⣁⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠉⢻⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡃⣰⣿⣿⡟⢸⡟⠁⠀⠀⠀⣀⠀⠀⠀⠈⠁⠀⠙⢿⣿⣿⣿⣿⣆⡈⢻⣿⡙⣿⣿⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⢠⣷⠴⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡏⠿⣿⡿⢁⠎⢰⣷⡆⠀⣐⣿⣿⣦⣄⣀⣴⣶⣶⡄⠀⡉⠙⠛⠛⢷⣄⠙⣿⡌⢿⣿⣿⣿⣿⣷⡀⠀⠒⠖⠒⣤⠝⢣⣾⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡅⢐⣻⡇⡌⢠⣿⣿⠇⠀⣿⣿⣿⣿⣿⡿⠿⠿⠟⠃⠀⠻⣿⣷⣦⣤⡙⣇⠘⣿⠘⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⡀⢻⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡇⠨⣽⠇⠀⠘⠛⠛⠀⢠⣿⣿⣿⣯⣤⣤⣶⣾⣿⣿⣧⠐⣌⠻⣿⣿⣇⢿⣧⣿⠀⣿⣿⣿⣿⣿⣷⢀⠀⠀⠀⠀⠀⣷⡄⢻⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⠈⠟⠀⣿⣿⣿⣿⢠⣿⡿⠿⠻⣿⣿⣿⠿⢿⣿⣿⣿⠀⣿⣧⡈⢿⣿⣾⣿⣏⡀⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣿⣷⡀⠙⠿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣰⡦⣆⢸⣿⣿⣿⣿⣿⣭⣷⡄⡿⣉⣤⣶⣿⣿⣿⣿⠂⣿⣿⣿⣆⠻⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⠈⡇⠀⠀⠀⠀⣿⣿⣷⣦⣀⡀⠀⣹⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣿⣿⣿⣿⣿⣿⣿⣿⡇⡾⢋⣴⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣧⠹⣿⣿⣿⡆⣿⣿⣿⣿⣿⣧⠐⠀⠀⠀⠈⠉⠛⣿⣿⣾⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⢴⠿⣿⣿⣿⣿⣿⡇⢸⣿⣿⣿⣿⣿⣆⠙⢿⣿⣧⠸⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠈⠀⠀⠈⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢋⠀⢠⣶⣶⣬⣉⡛⠹⠋⢠⣄⡉⠛⠛⢻⡿⠟⣻⣦⡈⠻⣷⡜⢿⣿⣿⣿⣿⣿⣷⡀⠀⠀⢶⣶⣾⣷⡄⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢁⡴⢃⣴⣿⣿⣿⣿⣿⣷⢀⠀⣿⣿⣿⣿⣶⡀⢠⣾⣿⣿⣿⡆⠹⣿⣾⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⢻⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⠀⢰⣿⣿⣿⣿⣿⣧⠈⢿⣿⣿⣿⣿⣦⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⠈⠻⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⣈⣛⣿⣿⣻⣄⡛⠿⢛⣿⣿⠀⣼⣿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣿⣿⣿⠃⡀⢻⣿⣽⣿⣿⣿⣿⣿⡿⠿⠿⠦⢶⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠻⠿⠛⠛⠻⠄⠉⠻⣿⣿⡏⢰⣿⣫⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⡈⠙⠾⣇⣀⠙⢿⡿⠟⢋⣩⣤⠴⠒⣠⣶⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⢴⣾⣿⣿⡶⠦⣄⠀⠀⠈⠻⢡⡿⢋⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⡈⠒⣀⣴⣶⡿⠛⣁⣂⣹⣭⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠘⠛⠛⠋⠀⠀⠀⠑⠀⠀⣠⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠋⢁⣴⣾⣿⣯⣤⣶⣿⣿⣿⣿⣿⣋⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠿⠿⠿⠛⠒⠦⡀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠋⠁⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠠⣶⣿⡿⢶⠦⠀⠈⢰⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⠟⡿⠛⠁⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⠿⣯⣼⣿⣿⣿⣿⣿⣿⣿⣿
+    `
+}
+
+
 
 
 
@@ -22,13 +113,13 @@ function getComputerChoice() {
     randomVal = Math.random() * 100;
     console.log(randomVal);
     if (randomVal <= 100/3) {
-        return "rock";
+        return "heart";
     }
     else if (randomVal > (100/3)*2) {
-        return "paper";
+        return "ora";
     }
     else {
-        return "scissors";
+        return "timestop";
     }
 }
 
@@ -39,9 +130,9 @@ function getHumanChoice() {
 let humanScore = 0;
 let computerScore = 0;
 scoreText.textContent = `The score is ${humanScore} to ${computerScore}`;
-const options = ["rock", "paper", "scissors"];
+const options = ["heart", "ora", "timestop"];
 
-//rock loses to paper loses to scissors loses to (loop around - rock)
+//heart loses to ora loses to timestop loses to (loop around - heart)
 //thus if the human chooses the choice `after` the computer choice (in the order RPS) the human wins
 
 function playRound(humanChoice, computerChoice) {
@@ -57,6 +148,8 @@ function playRound(humanChoice, computerChoice) {
         }
     
     else if (humanChoiceIndex === (computerChoiceIndex+1) % options.length) {
+        isAnimation = true;
+        paintAction(humanChoice);
         humanScore++;
         resultText.textContent = `You win! ${humanChoice} beats ${computerChoice}!`;
 
@@ -90,7 +183,7 @@ function printWinner(humanScore, computerScore) {
 
 
 // function playGame() {
-//     console.log("Welcome to Rock Paper Scissors! Try your luck...");
+//     console.log("Welcome to heart ora timestop! Try your luck...");
 //     for (let step = 0; step < 5; step++) {
 //         playRound(getHumanChoice(), getComputerChoice());
 //     }
