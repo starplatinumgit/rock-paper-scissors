@@ -10,16 +10,21 @@ body {
     font-family: impact, "Arial Black:, "'Trebuchet MS', sans-serif;
 }
 
+
+html {
+    
+}
+
 .game {
     text-align: center;;
 }
 
 .header {
-    padding-bottom: 200px;
+    ;
 }
 
 .gameplay{
-
+    min-height: 500px;
 }
 
 #gameplay-image {
