@@ -1,10 +1,10 @@
 const resultText = document.querySelector("#result-text");
-
 const playerChoices = document.querySelectorAll(".player-choices button");
-
 const scoreText = document.querySelector('#score-text');
-
 const gameplayText = document.querySelector('.gameplay pre');
+const restartBtn = document.querySelector('#restart');
+restartBtn.style.display = 'none';
+const allButtons = document.querySelectorAll('button');
 
 const jotaroTimestop = new Audio('/audio/jotaroTimestop2.mp3');
 const jotaroOra = new Audio('/audio/jotaroOra.mp3');
@@ -196,7 +196,7 @@ function printComputerAction(computerChoice) {
 
                 returnAscii();
                 playButtons();
-            }, 4000)
+            }, 4200)
             setTimeout(() => {
                 html.style.transition = 'filter 1.75s';
                 html.style.filter = 'invert(1)'
@@ -543,17 +543,41 @@ function playRound(humanChoice, computerChoice) {
 function printWinner(humanScore, computerScore) {
     if (humanScore === 5) {
         scoreText.textContent = "The World... Utterly defeated... Dead.";
+        retryState();
     }
     else if (computerScore === 5) {
         scoreText.textContent = "The crusaders have fallen...";
+        retryState();
     }
     else {
         return;
     }
 }
 
-function retryState(winner) {
+function retryState() {
     pauseButtons();
     playerChoices.forEach((button) => {
-        button.style.display = none;
-    }}
+        button.style.display = 'none';
+        restartBtn.style.display = '';
+        restartBtn.addEventListener('click', () => {
+            setTimeout(() => {
+                playerChoices.forEach((button) => {
+                button.style.display = '';
+                playButtons();
+                resultText.textContent = "So you're approaching me?";
+                restartBtn.style.display = 'none';
+                scoreText.textContent = "The score is 0 to 0";
+            })
+            }, 100);
+        })
+    })
+}
+
+allButtons.forEach((button) => {
+    button.addEventListener('mouseenter', () => {
+        button.style.border = "1px solid gray";
+    })
+    button.addEventListener('mouseleave', () => {
+        button.style.border = "0px";
+    })
+})

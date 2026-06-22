@@ -54,6 +54,18 @@ html {
 button {
     background: transparent;
     border: none;
-    height: 10px;
+    height: 50px;
     
+}
+
+button img {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+#restart {
+    border-color: #a0a0a0;
+    border: 5px;
+    color: #a0a0a0;
 }
