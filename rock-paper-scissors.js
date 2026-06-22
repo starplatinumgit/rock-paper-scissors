@@ -6,12 +6,12 @@ const restartBtn = document.querySelector('#restart');
 restartBtn.style.display = 'none';
 const allButtons = document.querySelectorAll('button');
 
-const jotaroTimestop = new Audio('/audio/jotaroTimestop2.mp3');
-const jotaroOra = new Audio('/audio/jotaroOra.mp3');
-const jotaroHeartstop = new Audio('/audio/jotaroHeartstop.mp3');
-const dioTimestop = new Audio('/audio/dioTimestop.mp3');
-const dioMuda = new Audio ('/audio/dioMuda.mp3');
-const dioHigh = new Audio ('/audio/dioHigh.mp3');
+const jotaroTimestop = new Audio('audio/jotaroTimestop2.mp3');
+const jotaroOra = new Audio('audio/jotaroOra.mp3');
+const jotaroHeartstop = new Audio('audio/jotaroHeartstop.mp3');
+const dioTimestop = new Audio('audio/dioTimestop.mp3');
+const dioMuda = new Audio ('audio/dioMuda.mp3');
+const dioHigh = new Audio ('audio/dioHigh.mp3');
 
 
 const html = document.querySelector('html');

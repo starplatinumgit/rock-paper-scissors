@@ -12,10 +12,6 @@ body {
 }
 
 
-html {
-    
-}
-
 .game {
     text-align: center;
 }
@@ -27,10 +23,6 @@ html {
 .gameplay{
     min-height: 500px;
 }
-
-#gameplay-image {
-}
-
 
 .footer {
     display: flex;
